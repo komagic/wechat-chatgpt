@@ -26,7 +26,8 @@
     "@types/qrcode": "^1.5.0",
     "@types/uuid": "^9.0.0",
     "nodemon": "^2.0.20",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
   },
   "nodemonConfig": {
     "watch": [
@@ -39,5 +40,7 @@
     "exec": "node --loader ts-node/esm src/main.ts",
     "delay": 500
   },
+  "engines": {
+    "node": ">=18.0.0"},
   "type": "module"
 }

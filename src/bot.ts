@@ -253,9 +253,13 @@ export class ChatGPTBot {
         return;
       });
       // Whisper
-      whisper("",fileName).then((text) => {
-        message.say(text);
-      })
+      // whisper("",fileName).then((text) => {
+      //   message.say(text);
+      // })
+      const raw_text = await whisper("",fileName);
+      console.log('🤖 语音 raw_text: ', raw_text);
+      
+      await this.resolveText(raw_text, privateChat, talker, room as RoomInterface);
       return;
     }
     if (rawText.startsWith("/cmd ")){
@@ -283,12 +287,16 @@ export class ChatGPTBot {
       }
       return;
     }
+    return await this.resolveText(rawText, privateChat, talker, room as RoomInterface);
+  }
+
+  private async resolveText(rawText: string, privateChat: boolean, talker: ContactInterface, room: RoomInterface) {
     if (this.triggerGPTMessage(rawText, privateChat)) {
       const text = this.cleanMessage(rawText, privateChat);
       if (privateChat) {
         return await this.onPrivateMessage(talker, text);
-      } else{
-        if (!this.disableGroupMessage){
+      } else {
+        if (!this.disableGroupMessage) {
           return await this.onGroupMessage(talker, text, room);
         } else {
           return;
