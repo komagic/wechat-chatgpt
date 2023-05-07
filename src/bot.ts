@@ -132,6 +132,7 @@ export class ChatGPTBot {
   async getGPTMessage(talkerName: string,text: string): Promise<string> {
     let gptMessage = await chatgpt(talkerName,text);
     if (gptMessage !=="") {
+      console.log(`🤖️ ChatGPT says: ${gptMessage}`);
       DBUtils.addAssistantMessage(talkerName,gptMessage);
       return gptMessage;
     }
